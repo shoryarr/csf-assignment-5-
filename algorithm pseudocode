@@ -1,0 +1,53 @@
+START
+
+Initialize an empty list called TASK_LIST
+
+DISPLAY menu:
+1. Add Task
+2. View Tasks
+3. Mark Task as Completed
+4. Show Upcoming Reminders
+5. Exit
+
+REPEAT
+    INPUT user_choice
+
+    IF user_choice = 1 THEN
+        INPUT task_name
+        INPUT deadline_date
+        CREATE task with name, deadline, status = "Pending"
+        ADD task to TASK_LIST
+        DISPLAY "Task Added Successfully"
+
+    ELSE IF user_choice = 2 THEN
+        FOR each task in TASK_LIST
+            DISPLAY task_name, deadline_date, status
+        END FOR
+
+    ELSE IF user_choice = 3 THEN
+        INPUT task_name_to_mark
+        SEARCH for task in TASK_LIST
+        IF task found THEN
+            UPDATE status = "Completed"
+            DISPLAY "Task Marked Completed"
+        ELSE
+            DISPLAY "Task Not Found"
+        END IF
+
+    ELSE IF user_choice = 4 THEN
+        FOR each task in TASK_LIST
+            IF task.deadline_date is within next 2 days AND status = "Pending" THEN
+                DISPLAY "Reminder: " task_name " is due soon!"
+            END IF
+        END FOR
+
+    ELSE IF user_choice = 5 THEN
+        EXIT loop
+
+    ELSE
+        DISPLAY "Invalid Choice"
+    END IF
+
+UNTIL user_choice = 5
+
+END
